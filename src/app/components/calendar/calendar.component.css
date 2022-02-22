@@ -1,0 +1,10 @@
+.calendar {
+  width: 300px;
+}
+
+.layout {
+  background: no-repeat url("../../../assets/img/fitbg1.jpg");
+  background-size: cover;
+  height: 100%;
+  width: 100%;
+}

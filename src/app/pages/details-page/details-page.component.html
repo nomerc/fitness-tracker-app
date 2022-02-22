@@ -1,0 +1,137 @@
+<div class="layout" fxLayout="column" fxLayoutAlign="center center">
+  <div fxLayout="column" fxLayoutAlign="center space-around">
+    <!-- workout date -->
+    <a routerLink="/">
+      <mat-card class="card">
+        <mat-card-header fxLayout="row" fxLayoutAlign="space-between">
+          <div mat-card-avatar class="header-image"></div>
+          <!-- edit buttons -->
+          <div>
+            <button
+              class="button-space"
+              matTooltip="Save data"
+              matTooltipPosition="right"
+              [matTooltipShowDelay]="500"
+              [matTooltipHideDelay]="100"
+              mat-fab
+              color="primary"
+              aria-label="Save data"
+              (click)="saveWorkoutData()"
+            >
+              <mat-icon>save</mat-icon>
+            </button>
+            <button
+              class="button-space"
+              matTooltip="Save this workout as the default one"
+              matTooltipPosition="right"
+              [matTooltipShowDelay]="500"
+              [matTooltipHideDelay]="100"
+              mat-fab
+              color="primary"
+              aria-label="Save as template"
+              (click)="saveWorkoutAsTemplate()"
+            >
+              <mat-icon> library_add </mat-icon>
+            </button>
+            <button
+              class="button-space"
+              matTooltip="Delete this workout"
+              matTooltipPosition="right"
+              [matTooltipShowDelay]="500"
+              [matTooltipHideDelay]="100"
+              mat-fab
+              color="warn"
+              aria-label="Delete workout"
+              (click)="deleteWorkout()"
+            >
+              <mat-icon> delete </mat-icon>
+            </button>
+          </div>
+
+          <mat-card-subtitle style="font-size: large; color: black">
+            {{ date | date }}</mat-card-subtitle
+          >
+        </mat-card-header>
+      </mat-card>
+    </a>
+
+    <div fxLayout="row" fxLayoutAlign="center center">
+      <!-- form -->
+      <!-- add button -->
+      <button
+        class="button-space"
+        matTooltip="Add exercise"
+        matTooltipPosition="right"
+        [matTooltipShowDelay]="500"
+        [matTooltipHideDelay]="100"
+        color="primary"
+        mat-fab
+        aria-label="Add Exercise"
+        (click)="addExercise()"
+      >
+        <mat-icon>add</mat-icon>
+      </button>
+
+      <form class="form">
+        <table
+          name="workout"
+          cellspacing="0"
+          *ngFor="let exercise of workout.exercises; let ind = index"
+        >
+          <tr>
+            <!-- exercise names -->
+            <td class="bg_light_gray">
+              <mat-form-field appearance="fill">
+                <mat-label>Exercise</mat-label>
+                <input
+                  name="exercise.{{ ind }}.name"
+                  matInput
+                  [(ngModel)]="workout.exercises[ind].name"
+                />
+              </mat-form-field>
+            </td>
+            <!-- number of repetitions -->
+            <td
+              class="bg_light_gray"
+              *ngFor="
+                let reps of exercise.repsInSets;
+                let i = index;
+                trackBy: indexTracker
+              "
+            >
+              <mat-form-field class="num-width" appearance="fill">
+                <mat-label>Set {{ i + 1 }}</mat-label>
+                <input
+                  name="exercise.{{ ind }}.name.{{ i }} "
+                  matInput
+                  type="number"
+                  [(ngModel)]="workout.exercises[ind].repsInSets[i]"
+                  placeholder="0"
+                />
+              </mat-form-field>
+            </td>
+            <!-- delete buttons -->
+            <td>
+              <button
+                matTooltip="Delete this exercise"
+                matTooltipPosition="left"
+                [matTooltipShowDelay]="500"
+                [matTooltipHideDelay]="100"
+                class="button-space"
+                color="warn"
+                mat-fab
+                aria-label="Delete Exercise"
+                (click)="deleteExercise(exercise)"
+              >
+                <mat-icon>delete</mat-icon>
+              </button>
+            </td>
+          </tr>
+        </table>
+      </form>
+
+      <!-- edit buttons -->
+      <div fxLayout="column" fxLayoutAlign="center"></div>
+    </div>
+  </div>
+</div>

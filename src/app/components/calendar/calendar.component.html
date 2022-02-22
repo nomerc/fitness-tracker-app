@@ -1,0 +1,15 @@
+<mat-card
+  style="
+    width: 500px;
+    margin-bottom: 20px;
+    background-color: rgba(255, 255, 255, 0.7);
+  "
+>
+  <mat-calendar
+    #calendar
+    [minDate]="minDate"
+    [(selected)]="selected"
+    (selectedChange)="showDetails()"
+    [dateClass]="dateClass()"
+  ></mat-calendar>
+</mat-card>
