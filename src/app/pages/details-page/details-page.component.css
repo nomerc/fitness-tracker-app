@@ -1,11 +1,15 @@
 .layout {
   background: no-repeat url("../../../assets/img/fitbg1.jpg");
   background-size: cover;
-  height: 100%;
+  /* height: 100%; */
 }
 
 .button-space {
-  margin: 0 5px 0px 5px;
+  margin: 5px 5px 0 5px;
+}
+
+.delete-button-space {
+  margin: -15px 0 0 5px;
 }
 
 .num-width {

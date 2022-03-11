@@ -1,101 +1,141 @@
-import { Component, Input, OnInit, ViewChild } from '@angular/core';
+import { KeyValue } from "@angular/common";
+import { Component, Input, OnInit, ViewChild } from "@angular/core";
 
 import {
   ChartComponent,
   ApexAxisChartSeries,
   ApexChart,
   ApexXAxis,
-  ApexDataLabels,
-  ApexStroke,
-  ApexYAxis,
-  ApexTitleSubtitle,
   ApexLegend,
-  ApexTheme,
-} from 'ng-apexcharts';
-
-import { series } from '../../../data/data';
+  ApexResponsive,
+  ApexFill,
+  ApexPlotOptions,
+  ApexNoData,
+} from "ng-apexcharts";
 
 export type ChartOptions = {
   series: ApexAxisChartSeries;
+  noData: ApexNoData;
   chart: ApexChart;
   xaxis: ApexXAxis;
-  stroke: ApexStroke;
-  dataLabels: ApexDataLabels;
-  yaxis: ApexYAxis;
-  title: ApexTitleSubtitle;
-  theme: ApexTheme;
-  labels: string[];
+  responsive: ApexResponsive[];
+  fill: ApexFill;
   legend: ApexLegend;
-  subtitle: ApexTitleSubtitle;
+  plotOptions: ApexPlotOptions;
 };
 
 @Component({
-  selector: 'app-component-card',
-  templateUrl: './card.component.html',
-  styleUrls: ['./card.component.css'],
+  selector: "app-component-card",
+  templateUrl: "./card.component.html",
+  styleUrls: ["./card.component.css"],
 })
 export class CardComponent implements OnInit {
-  // @Input() label!: string;
-  // @Input() total!: string;
-  // @Input() percentage!: string;
+  @Input() exerciseName: string = "";
+  @Input() chartData!: KeyValue<string, any>;
 
-  // @Input() data: Array<number> = [];
-
-  @ViewChild('chart') chart!: ChartComponent;
+  @ViewChild("chart") chart!: ChartComponent;
   public chartOptions!: ChartOptions;
+  series: any[] = [];
 
   constructor() {}
 
   ngOnInit(): void {
+    this.setDiagramData();
+    this.initChartOptions();
+    this.updateChartData();
+  }
+
+  setDiagramData(): void {
+    let setCounter: number = 1;
+    let repsInSets: number[][];
+
+    repsInSets = this.transformInputData();
+
+    repsInSets.forEach((set) => {
+      this.series.push({
+        name: "Set " + setCounter++,
+        data: set,
+      });
+    });
+  }
+
+  transformInputData(): number[][] {
+    let repsInDates,
+      repsInSets: number[][] = [];
+
+    this.exractDatesFromInputData();
+    repsInSets = this.extractRepsInSetsFromInputData();
+    repsInDates = this.transposeArray(repsInSets);
+
+    return repsInDates;
+  }
+
+  updateChartData() {
+    this.chartOptions.series = this.series;
+  }
+
+  exractDatesFromInputData(): string[] {
+    let output: string[] = [],
+      dates: string[] = Object.keys(this.chartData.value);
+
+    dates.forEach((textDate) => {
+      output.unshift(new Date(textDate).toLocaleDateString());
+    });
+
+    return output;
+  }
+
+  extractRepsInSetsFromInputData(): number[][] {
+    return Object.values(this.chartData.value);
+  }
+
+  transposeArray(a: number[][]): number[][] {
+    let output: number[][] = [];
+    //https://stackoverflow.com/questions/17428587/transposing-a-2d-array-in-javascript
+    a.reverse();
+    output = a[0].map((_, colIndex) => a.map((row) => row[colIndex]));
+    return output;
+  }
+
+  initChartOptions(): void {
     this.chartOptions = {
-      series: [
+      series: [],
+      noData: {
+        text: "Loading...",
+      },
+      chart: {
+        type: "bar",
+        height: 350,
+        stacked: true,
+        stackType: "normal",
+      },
+      responsive: [
         {
-          name: 'STOCK ABC',
-          data: series.monthDataSeries1.prices,
+          breakpoint: 480,
+          options: {
+            legend: {
+              position: "bottom",
+              offsetX: -10,
+              offsetY: 0,
+            },
+          },
         },
       ],
-      chart: {
-        type: 'area',
-        height: 200,
-        zoom: {
-          enabled: false,
-        },
-      },
-      dataLabels: {
-        enabled: false,
-      },
-      stroke: {
-        curve: 'straight',
-      },
-
-      title: {
-        // text: 'Fundamental Analysis of Stocks',
-        // align: 'left',
-      },
-      theme: {
-        mode: 'dark',
-        palette: 'palette1',
-        monochrome: {
-          enabled: false,
-          color: '#255aee',
-          shadeTo: 'light',
-          shadeIntensity: 0.65,
-        },
-      },
-      subtitle: {
-        text: 'Users Number Movements',
-        // text: 'Price Movements',
-        align: 'left',
-      },
-      labels: series.monthDataSeries1.dates,
       xaxis: {
-        type: 'datetime',
+        categories: this.exractDatesFromInputData(),
       },
-      yaxis: {
-        opposite: true,
+      fill: {
+        opacity: 1,
       },
       legend: {
-        horizontalAlign: 'left',
+        position: "right",
+        offsetX: 0,
+        offsetY: 50,
+      },
+      plotOptions: {
+        bar: {
+          columnWidth: "15%",
+        },
       },
     };
   }

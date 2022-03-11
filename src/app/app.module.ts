@@ -23,6 +23,7 @@ import { NgApexchartsModule } from "ng-apexcharts";
 
 //angular material
 import { MaterialModule } from "src/modules/material.module";
+import { AddExerciseNameModalComponent } from './components/add-exercise-name-modal/add-exercise-name-modal.component';
 
 @NgModule({
   declarations: [
@@ -33,6 +34,7 @@ import { MaterialModule } from "src/modules/material.module";
     DetailsPageComponent,
     DashboardComponent,
     CardComponent,
+    AddExerciseNameModalComponent,
   ],
   imports: [
     MaterialModule,

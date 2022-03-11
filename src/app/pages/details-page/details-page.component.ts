@@ -1,9 +1,12 @@
 import { Component, OnInit } from "@angular/core";
-import { Router, ActivatedRoute, ParamMap } from "@angular/router";
+import { Router, ActivatedRoute } from "@angular/router";
 import { DataService } from "src/app/data.service";
 import { Exercise } from "src/models/exercise.model";
 import { Workout } from "src/models/workout.model";
 import { MatSnackBar } from "@angular/material/snack-bar";
+import { ExerciseName } from "src/models/exerciseName.model";
+import { MatDialog } from "@angular/material/dialog";
+import { AddExerciseNameModalComponent } from "src/app/components/add-exercise-name-modal/add-exercise-name-modal.component";
 
 @Component({
   selector: "app-details-page",
@@ -11,6 +14,10 @@ import { MatSnackBar } from "@angular/material/snack-bar";
   styleUrls: ["./details-page.component.css"],
 })
 export class DetailsPageComponent implements OnInit {
+  exercises!: ExerciseName[];
+  date!: number;
+  exerciseName!: string;
+
   workout: Workout = {
     date: Date.now(),
     exercises: [
@@ -25,12 +32,13 @@ export class DetailsPageComponent implements OnInit {
     private router: Router,
     private route: ActivatedRoute,
     private dataService: DataService,
-    private _snackBar: MatSnackBar
+    private _snackBar: MatSnackBar,
+    public dialog: MatDialog
   ) {}
 
-  date!: number;
-
   ngOnInit(): void {
+    this.getExerciseNamesFromDB();
+
     this.route.paramMap.subscribe((params) => {
       //get the date from params or use current date
       this.date = Date.parse(params.get("date") ?? Date());
@@ -38,6 +46,7 @@ export class DetailsPageComponent implements OnInit {
     this.getWorkoutData();
   }
 
+  //-----workout data actions-----
   getWorkoutData() {
     this.dataService.getWorkout(this.date).subscribe((res) => {
       if (res.date && res.exercises) this.workout = res;
@@ -48,7 +57,7 @@ export class DetailsPageComponent implements OnInit {
     this.workout.date = this.date;
     this.dataService.addOrUpdateWorkout(this.workout).subscribe((res) => {
       this.openSnackBar(`Workout saved`, "Close");
-      this.toMainPaige();
+      this.navigateToMainPaige();
     });
   }
 
@@ -62,10 +71,11 @@ export class DetailsPageComponent implements OnInit {
   deleteWorkout() {
     this.dataService.deleteWorkout(this.workout).subscribe(() => {
       this.openSnackBar(`Workout deleted`, "Close");
-      this.toMainPaige();
+      this.navigateToMainPaige();
     });
   }
 
+  //-----exercise data actions-----
   addExercise() {
     this.workout.exercises.push({
       name: "Exercise name",
@@ -79,11 +89,36 @@ export class DetailsPageComponent implements OnInit {
     );
   }
 
+  //-----exercise names data actions-----
+  addNewExerciseName(): void {
+    const dialogRef = this.dialog.open(AddExerciseNameModalComponent, {
+      width: "350px",
+      data: { exerciseName: this.exerciseName },
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      this.exerciseName = result;
+      this.dataService.addExerciseName(this.exerciseName).subscribe(() => {
+        this.openSnackBar(
+          `${this.exerciseName} added to exercise names list`,
+          "Close"
+        );
+        this.getExerciseNamesFromDB();
+      });
+    });
+  }
+
+  getExerciseNamesFromDB() {
+    this.dataService.getAllExerciseNames().subscribe((res) => {
+      this.exercises = res;
+    });
+  }
+
   openSnackBar(message: string, action: string) {
     this._snackBar.open(message, action, { duration: 1500 });
   }
 
-  toMainPaige() {
+  navigateToMainPaige() {
     this.router.navigate(["/"]);
   }
 

@@ -2,6 +2,7 @@ import { HttpClient, HttpErrorResponse } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Observable, of, throwError } from "rxjs";
 import { catchError } from "rxjs/operators";
+import { ExerciseName } from "src/models/exerciseName.model";
 import { Workout } from "src/models/workout.model";
 
 @Injectable({
@@ -13,6 +14,8 @@ export class DataService {
   constructor(private http: HttpClient) {
     this.ROOT_URL = "http://localhost:3000";
   }
+
+  //------workout data operations------
 
   getWorkout(date: Number): Observable<Workout> {
     return this.http.get<Workout>(`${this.ROOT_URL}/workouts/${date}`);
@@ -37,6 +40,17 @@ export class DataService {
     return this.http.delete<Workout>(
       `${this.ROOT_URL}/workouts/${workout.date}`
     );
+  }
+
+  //------exercise name data operations------
+  getAllExerciseNames(): Observable<ExerciseName[]> {
+    return this.http.get<ExerciseName[]>(`${this.ROOT_URL}/exercise_names`);
+  }
+
+  addExerciseName(name: string): Observable<ExerciseName> {
+    return this.http.post<ExerciseName>(`${this.ROOT_URL}/exercise_names`, {
+      name,
+    });
   }
 
   // updateArticle(id: string, article: Workout): Observable<Workout> {

@@ -1,0 +1,26 @@
+<h1 mat-dialog-title>Add new exercise name</h1>
+<div mat-dialog-content>
+  <mat-form-field class="full-width" appearance="fill">
+    <mat-label>Exercise name</mat-label>
+    <input
+      type="text"
+      matInput
+      name="description"
+      [(ngModel)]="data.exerciseName"
+    />
+  </mat-form-field>
+</div>
+<div mat-dialog-actions fxLayout="row" fxLayoutAlign="center">
+  <button
+    mat-button
+    mat-raised-button
+    color="primary"
+    [mat-dialog-close]="data.exerciseName"
+    cdkFocusInitial
+  >
+    Add
+  </button>
+  <button mat-button mat-raised-button color="warn" (click)="onCancel()">
+    Cancel
+  </button>
+</div>

@@ -10,6 +10,9 @@
   </button>
 </div>
 
-<app-component-card></app-component-card>
-<app-component-card></app-component-card>
-<app-component-card></app-component-card>
+<div *ngFor="let exercise of chartData | keyvalue">
+  <app-component-card
+    [exerciseName]="exercise.key"
+    [chartData]="exercise"
+  ></app-component-card>
+</div>
