@@ -28,6 +28,7 @@ import { MaterialModule } from "src/modules/material.module";
 import { AddExerciseNameModalComponent } from "./components/add-exercise-name-modal/add-exercise-name-modal.component";
 import { LoginPageComponent } from "./pages/login-page/login-page.component";
 import { SignupPageComponent } from "./pages/signup-page/signup-page.component";
+import { EditWorkoutComponent } from "./components/edit-workout/edit-workout.component";
 
 @NgModule({
   declarations: [
@@ -41,6 +42,7 @@ import { SignupPageComponent } from "./pages/signup-page/signup-page.component";
     AddExerciseNameModalComponent,
     LoginPageComponent,
     SignupPageComponent,
+    EditWorkoutComponent,
   ],
   imports: [
     MaterialModule,

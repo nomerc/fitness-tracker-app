@@ -53,28 +53,6 @@ export class DetailsPageComponent implements OnInit {
     });
   }
 
-  saveWorkoutData() {
-    this.workout.date = this.date;
-    this.dataService.addOrUpdateWorkout(this.workout).subscribe((res) => {
-      this.openSnackBar(`Workout saved`, "Close");
-      this.navigateToMainPaige();
-    });
-  }
-
-  saveWorkoutAsTemplate() {
-    this.workout.date = 0;
-    this.dataService.addOrUpdateWorkout(this.workout).subscribe((res) => {
-      this.openSnackBar("Default workout saved", "Close");
-    });
-  }
-
-  deleteWorkout() {
-    this.dataService.deleteWorkout(this.workout).subscribe(() => {
-      this.openSnackBar(`Workout deleted`, "Close");
-      this.navigateToMainPaige();
-    });
-  }
-
   //-----exercise data actions-----
   addExercise() {
     this.workout.exercises.push({

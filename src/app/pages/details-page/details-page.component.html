@@ -1,60 +1,7 @@
 <div class="layout" fxLayout="column" fxLayoutAlign="center center">
   <div fxLayout="column" fxLayoutAlign="center space-around">
-    <!-- workout icon date and edit buttons -->
-    <a routerLink="/">
-      <mat-card class="card">
-        <mat-card-header fxLayout="row" fxLayoutAlign="space-between">
-          <!-- workout icon -->
-          <div mat-card-avatar class="header-image"></div>
-          <!-- edit buttons -->
-          <div>
-            <button
-              class="button-space"
-              matTooltip="Save data"
-              matTooltipPosition="right"
-              [matTooltipShowDelay]="500"
-              [matTooltipHideDelay]="100"
-              mat-fab
-              color="primary"
-              aria-label="Save data"
-              (click)="saveWorkoutData()"
-            >
-              <mat-icon>save</mat-icon>
-            </button>
-            <button
-              class="button-space"
-              matTooltip="Save this workout as the default one"
-              matTooltipPosition="right"
-              [matTooltipShowDelay]="500"
-              [matTooltipHideDelay]="100"
-              mat-fab
-              color="primary"
-              aria-label="Save as template"
-              (click)="saveWorkoutAsTemplate()"
-            >
-              <mat-icon> library_add </mat-icon>
-            </button>
-            <button
-              class="button-space"
-              matTooltip="Delete this workout"
-              matTooltipPosition="right"
-              [matTooltipShowDelay]="500"
-              [matTooltipHideDelay]="100"
-              mat-fab
-              color="warn"
-              aria-label="Delete workout"
-              (click)="deleteWorkout()"
-            >
-              <mat-icon> delete </mat-icon>
-            </button>
-          </div>
-          <!-- workout date -->
-          <mat-card-subtitle style="font-size: large; color: black">
-            {{ date | date }}</mat-card-subtitle
-          >
-        </mat-card-header>
-      </mat-card>
-    </a>
+    <!-- workout header - icon date and edit buttons -->
+    <app-edit-workout [workout]="workout" [date]="date"></app-edit-workout>
 
     <div fxLayout="row" fxLayoutAlign="center center">
       <div fxLayout="column" fxLayoutAlign="center center">
