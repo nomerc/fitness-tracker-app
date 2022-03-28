@@ -5,7 +5,9 @@ import { BrowserModule } from "@angular/platform-browser";
 import { AppRoutingModule } from "./app-routing.module";
 import { AppComponent } from "./app.component";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
-import { HttpClientModule } from "@angular/common/http";
+import { HttpClientModule, HTTP_INTERCEPTORS } from "@angular/common/http";
+
+import { WebRequestInterceptor } from "./web-req.interceptor";
 
 //app pages and components
 import { CalendarComponent } from "./components/calendar/calendar.component";
@@ -23,7 +25,9 @@ import { NgApexchartsModule } from "ng-apexcharts";
 
 //angular material
 import { MaterialModule } from "src/modules/material.module";
-import { AddExerciseNameModalComponent } from './components/add-exercise-name-modal/add-exercise-name-modal.component';
+import { AddExerciseNameModalComponent } from "./components/add-exercise-name-modal/add-exercise-name-modal.component";
+import { LoginPageComponent } from "./pages/login-page/login-page.component";
+import { SignupPageComponent } from "./pages/signup-page/signup-page.component";
 
 @NgModule({
   declarations: [
@@ -35,6 +39,8 @@ import { AddExerciseNameModalComponent } from './components/add-exercise-name-mo
     DashboardComponent,
     CardComponent,
     AddExerciseNameModalComponent,
+    LoginPageComponent,
+    SignupPageComponent,
   ],
   imports: [
     MaterialModule,
@@ -43,10 +49,15 @@ import { AddExerciseNameModalComponent } from './components/add-exercise-name-mo
     HttpClientModule,
     FormsModule,
     BrowserAnimationsModule,
-
     FlexLayoutModule,
-
     NgApexchartsModule,
+  ],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: WebRequestInterceptor,
+      multi: true,
+    },
   ],
   bootstrap: [AppComponent],
 })

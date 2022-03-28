@@ -13,8 +13,6 @@ export class ChartsPageComponent implements OnInit {
   workouts: Workout[] = [];
   trainingDates: string[] = [];
   exerciseNames: Set<string> = new Set();
-  // allRepsInSets: number[][] = [];
-
   chartData: Map<string, any> = new Map();
 
   ngOnInit(): void {
@@ -28,8 +26,6 @@ export class ChartsPageComponent implements OnInit {
       filteredData = this.excludeDefaultWorkoutData(res);
 
       filteredData.map((workout) => {
-        // this.trainingDates.push(workout.date.toString());
-
         for (let i = 0; i < workout.exercises.length; i++) {
           this.exerciseNames.add(workout.exercises[i].name);
         }

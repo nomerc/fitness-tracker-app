@@ -5,6 +5,7 @@ html,
 body {
   height: 100%;
 }
+
 body {
   margin: 0 auto;
   font-family: Roboto, "Helvetica Neue", sans-serif;
@@ -13,4 +14,24 @@ body {
 .workout-day {
   background-color: orange;
   border-radius: 100%;
+}
+
+.layout {
+  background: center url("../src/assets/img/fitbg1.jpg");
+  background-size: cover;
+  height: auto;
+}
+
+.bg_light_gray {
+  background-color: rgba(255, 255, 255, 0.7);
+}
+
+.login-form {
+  min-width: 150px;
+  max-width: 300px;
+  width: 100%;
+}
+
+.login-full-width {
+  width: 100%;
 }

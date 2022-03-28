@@ -99,10 +99,12 @@ export class DetailsPageComponent implements OnInit {
     dialogRef.afterClosed().subscribe((result) => {
       this.exerciseName = result;
       this.dataService.addExerciseName(this.exerciseName).subscribe(() => {
-        this.openSnackBar(
-          `${this.exerciseName} added to exercise names list`,
-          "Close"
-        );
+        if (this.exerciseName) {
+          this.openSnackBar(
+            `${this.exerciseName} added to exercise names list`,
+            "Close"
+          );
+        }
         this.getExerciseNamesFromDB();
       });
     });
