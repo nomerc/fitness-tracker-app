@@ -19,6 +19,7 @@ body {
 .layout {
   background: center url("../src/assets/img/fitbg1.jpg");
   background-size: cover;
+  min-height: 100%;
   height: auto;
 }
 

@@ -3,6 +3,7 @@ import { MatSnackBar } from "@angular/material/snack-bar";
 import { Router } from "@angular/router";
 import { DataService } from "src/app/data.service";
 import { Workout } from "src/models/workout.model";
+import Utils from "src/utils/utils";
 
 @Component({
   selector: "app-edit-workout",
@@ -13,21 +14,21 @@ export class EditWorkoutComponent implements OnInit {
   @Input() workout!: Workout;
   @Input() date!: number;
 
+  utils = new Utils(this._snackBar);
+
   constructor(
     private router: Router,
     private dataService: DataService,
     private _snackBar: MatSnackBar
   ) {}
 
-  ngOnInit(): void {
-    console.log(this.date);
-  }
+  ngOnInit(): void {}
 
   //-----workout data actions-----
   saveWorkoutData() {
     this.workout.date = this.date;
     this.dataService.addOrUpdateWorkout(this.workout).subscribe((res) => {
-      this.openSnackBar(`Workout saved`, "Close");
+      this.utils.openSnackBar(`Workout saved`, "Close");
       this.navigateToMainPaige();
     });
   }
@@ -35,19 +36,15 @@ export class EditWorkoutComponent implements OnInit {
   saveWorkoutAsTemplate() {
     this.workout.date = 0;
     this.dataService.addOrUpdateWorkout(this.workout).subscribe((res) => {
-      this.openSnackBar("Default workout saved", "Close");
+      this.utils.openSnackBar("Default workout saved", "Close");
     });
   }
 
   deleteWorkout() {
     this.dataService.deleteWorkout(this.workout).subscribe(() => {
-      this.openSnackBar(`Workout deleted`, "Close");
+      this.utils.openSnackBar(`Workout deleted`, "Close");
       this.navigateToMainPaige();
     });
-  }
-
-  openSnackBar(message: string, action: string) {
-    this._snackBar.open(message, action, { duration: 1500 });
   }
 
   navigateToMainPaige() {

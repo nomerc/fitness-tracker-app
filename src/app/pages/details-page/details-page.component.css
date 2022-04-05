@@ -3,19 +3,3 @@
 .button-space {
   margin: 5px 5px 0 5px;
 }
-
-.delete-button-space {
-  margin: -15px 0 0 5px;
-}
-
-.num-width {
-  width: 75px;
-}
-
-td {
-  padding-right: 8px;
-}
-
-.bg_light_gray {
-  background-color: rgba(255, 255, 255, 0.7);
-}

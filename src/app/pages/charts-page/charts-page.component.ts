@@ -10,9 +10,8 @@ import { Workout } from "src/models/workout.model";
 export class ChartsPageComponent implements OnInit {
   constructor(public dataService: DataService) {}
 
-  workouts: Workout[] = [];
-  trainingDates: string[] = [];
-  exerciseNames: Set<string> = new Set();
+  // workouts: Workout[] = [];
+  // trainingDates: string[] = [];
   chartData: Map<string, any> = new Map();
 
   ngOnInit(): void {
@@ -21,19 +20,20 @@ export class ChartsPageComponent implements OnInit {
 
   getWorkoutsData() {
     let filteredData: Workout[];
+    let exerciseNames: Set<string> = new Set();
 
     this.dataService.getAllWorkouts().subscribe((res) => {
       filteredData = this.excludeDefaultWorkoutData(res);
 
       filteredData.map((workout) => {
         for (let i = 0; i < workout.exercises.length; i++) {
-          this.exerciseNames.add(workout.exercises[i].name);
+          exerciseNames.add(workout.exercises[i].name);
         }
       });
 
       this.chartData = this.getWorkoutDataGroupedByExerciseName(
         filteredData,
-        this.exerciseNames
+        exerciseNames
       );
     });
   }

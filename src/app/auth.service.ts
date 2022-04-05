@@ -21,37 +21,39 @@ export class AuthService {
         //auth token will be in the header
         this.setSession(
           res.body._id,
+          res.body.name,
           String(res.headers.get("x-access-token")),
           String(res.headers.get("x-refresh-token"))
         );
-        console.log("Logged in");
       })
     );
   }
 
-  signup(email: string, password: string) {
-    return this.webService.signup(email, password).pipe(
+  signup(name: string, email: string, password: string) {
+    return this.webService.signup(name, email, password).pipe(
       shareReplay(),
       tap((res: HttpResponse<any>) => {
         //auth token will be in the header
         this.setSession(
           res.body._id,
+          res.body.name,
           String(res.headers.get("x-access-token")),
           String(res.headers.get("x-refresh-token"))
         );
-        console.log("Signed up and logged in");
       })
     );
   }
 
   private setSession(
     userId: string,
+    userName: string,
     accessToken: string,
     refreshToken: string
   ) {
     localStorage.setItem("user-id", userId);
     localStorage.setItem("x-access-token", accessToken);
     localStorage.setItem("x-refresh-token", refreshToken);
+    localStorage.setItem("user-name", userName);
   }
 
   logout() {
@@ -61,6 +63,7 @@ export class AuthService {
 
   private removeSession() {
     localStorage.removeItem("user-id");
+    localStorage.removeItem("user-name");
     localStorage.removeItem("x-access-token");
     localStorage.removeItem("x-refresh-token");
   }
@@ -75,6 +78,14 @@ export class AuthService {
 
   getUserId() {
     return localStorage.getItem("user-id");
+  }
+
+  getUserMail() {
+    return localStorage.getItem("e-mail");
+  }
+
+  getUserName() {
+    return localStorage.getItem("user-name");
   }
 
   setAccessToken(accessToken: string) {

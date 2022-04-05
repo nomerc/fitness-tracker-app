@@ -11,6 +11,7 @@ const routes: Routes = [
   { path: "", component: StartingPageComponent },
   { path: "login", component: LoginPageComponent },
   { path: "signup", component: SignupPageComponent },
+  { path: "details", component: DetailsPageComponent },
   { path: "details/:date", component: DetailsPageComponent },
   { path: "charts", component: ChartsPageComponent },
   { path: "dashboard", component: DashboardComponent },

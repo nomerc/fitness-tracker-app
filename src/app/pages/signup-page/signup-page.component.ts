@@ -1,6 +1,8 @@
 import { Component, OnInit } from "@angular/core";
+import { MatSnackBar } from "@angular/material/snack-bar";
 import { Router } from "@angular/router";
 import { AuthService } from "src/app/auth.service";
+import Utils from "src/utils/utils";
 
 @Component({
   selector: "app-signup-page",
@@ -8,17 +10,22 @@ import { AuthService } from "src/app/auth.service";
   styleUrls: ["./signup-page.component.css"],
 })
 export class SignupPageComponent implements OnInit {
-  constructor(private authService: AuthService, private router: Router) {}
+  constructor(
+    private authService: AuthService,
+    private _snackBar: MatSnackBar,
+    private router: Router
+  ) {}
+
+  utils = new Utils(this._snackBar);
 
   ngOnInit(): void {}
 
-  onSignupButtonClicked(email: string, password: string) {
-    this.authService.signup(email, password).subscribe((res) => {
+  onSignupButtonClicked(name: string, email: string, password: string) {
+    this.authService.signup(name, email, password).subscribe((res) => {
       if (res.status === 200) {
+        this.utils.openSnackBar(`Logged in`, "Close");
         this.router.navigate(["/"]);
       }
-
-      console.log(res);
     });
   }
 }

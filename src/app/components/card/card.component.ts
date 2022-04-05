@@ -11,6 +11,8 @@ import {
   ApexFill,
   ApexPlotOptions,
   ApexNoData,
+  ApexTitleSubtitle,
+  ApexStroke,
 } from "ng-apexcharts";
 
 export type ChartOptions = {
@@ -21,6 +23,8 @@ export type ChartOptions = {
   responsive: ApexResponsive[];
   fill: ApexFill;
   legend: ApexLegend;
+  title: ApexTitleSubtitle;
+  stroke: ApexStroke;
   plotOptions: ApexPlotOptions;
 };
 
@@ -35,79 +39,94 @@ export class CardComponent implements OnInit {
 
   @ViewChild("chart") chart!: ChartComponent;
   public chartOptions!: ChartOptions;
-  series: any[] = [];
 
   constructor() {}
 
   ngOnInit(): void {
-    this.setDiagramData();
-    this.initChartOptions();
-    this.updateChartData();
+    let series: any[] = [];
+    let sortedData: Map<string, any> = this.sortData(this.chartData);
+
+    series = this.setDiagramData(sortedData);
+    this.initChartOptions(sortedData);
+    this.updateChartData(series);
   }
 
-  setDiagramData(): void {
+  setDiagramData(sortedData: Map<string, any>): any[] {
     let setCounter: number = 1;
     let repsInSets: number[][];
+    let series: any[] = [];
 
-    repsInSets = this.transformInputData();
+    repsInSets = this.transformInputData(sortedData);
 
     repsInSets.forEach((set) => {
-      this.series.push({
+      series.push({
         name: "Set " + setCounter++,
         data: set,
       });
     });
+
+    return series;
   }
 
-  transformInputData(): number[][] {
-    let repsInDates,
+  transformInputData(sortedData: Map<string, any>): number[][] {
+    let repsInDates: number[][] = [],
       repsInSets: number[][] = [];
 
-    this.exractDatesFromInputData();
-    repsInSets = this.extractRepsInSetsFromInputData();
-    repsInDates = this.transposeArray(repsInSets);
+    repsInSets = this.extractRepsInSetsFromInputData(sortedData);
+    repsInDates = this.transposeArrayAntiDiagonal(repsInSets);
 
     return repsInDates;
   }
 
-  updateChartData() {
-    this.chartOptions.series = this.series;
+  updateChartData(series: any[]) {
+    this.chartOptions.series = series;
   }
 
-  exractDatesFromInputData(): string[] {
+  exractDatesFromInputData(sortedData: Map<string, any>): string[] {
     let output: string[] = [],
-      dates: string[] = Object.keys(this.chartData.value);
+      dates: string[] = Array.from(sortedData.keys());
 
-    dates.forEach((textDate) => {
-      output.unshift(new Date(textDate).toLocaleDateString());
-    });
+    for (let i = 0; i < dates.length; i++) {
+      output[i] = new Date(dates[i]).toLocaleDateString();
+    }
 
     return output;
   }
 
-  extractRepsInSetsFromInputData(): number[][] {
-    return Object.values(this.chartData.value);
+  extractRepsInSetsFromInputData(sortedData: Map<string, any>): number[][] {
+    return Array.from(sortedData.values());
   }
 
-  transposeArray(a: number[][]): number[][] {
-    let output: number[][] = [];
+  transposeArrayAntiDiagonal(a: number[][]): number[][] {
+    let output: number[][] = [],
+      copy: number[][] = [...a];
     //https://stackoverflow.com/questions/17428587/transposing-a-2d-array-in-javascript
-    a.reverse();
-    output = a[0].map((_, colIndex) => a.map((row) => row[colIndex]));
+
+    // copy.reverse(); - for diagonal transpose
+    output = copy[0].map((_, colIndex) => copy.map((row) => row[colIndex]));
     return output;
   }
 
-  initChartOptions(): void {
+  initChartOptions(sortedData: Map<string, any>): void {
     this.chartOptions = {
       series: [],
       noData: {
         text: "Loading...",
       },
       chart: {
-        type: "bar",
+        type: "line",
         height: 350,
         stacked: true,
         stackType: "normal",
+      },
+      title: {
+        text: "Repetitions in sets",
+        align: "left",
+      },
+      stroke: {
+        width: 5,
+        curve: "smooth",
+        dashArray: [0, 0, 0, 0, 0],
       },
       responsive: [
         {
@@ -122,15 +141,20 @@ export class CardComponent implements OnInit {
         },
       ],
       xaxis: {
-        categories: this.exractDatesFromInputData(),
+        categories: this.exractDatesFromInputData(sortedData),
       },
       fill: {
         opacity: 1,
       },
       legend: {
-        position: "right",
-        offsetX: 0,
-        offsetY: 50,
+        tooltipHoverFormatter: function (val, opts) {
+          return (
+            val +
+            " - <strong>" +
+            opts.w.globals.series[opts.seriesIndex][opts.dataPointIndex] +
+            "</strong>"
+          );
+        },
       },
       plotOptions: {
         bar: {
@@ -138,5 +162,10 @@ export class CardComponent implements OnInit {
         },
       },
     };
+  }
+
+  sortData(chartData: KeyValue<string, any>): Map<string, any> {
+    var mapAsc = new Map([...Object.entries(chartData)].sort());
+    return mapAsc;
   }
 }

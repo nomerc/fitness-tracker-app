@@ -29,7 +29,13 @@
           mat-raised-button
           color="primary"
           style="margin-top: 15px"
-          (click)="onSignupButtonClicked(emailInput.value, passwordInput.value)"
+          (click)="
+            onSignupButtonClicked(
+              nameInput.value,
+              emailInput.value,
+              passwordInput.value
+            )
+          "
         >
           Sign up
         </button>

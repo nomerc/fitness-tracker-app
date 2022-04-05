@@ -1,0 +1,92 @@
+<div fxLayout="row" fxLayoutAlign="center center">
+  <div fxLayout="column" fxLayoutAlign="center center">
+    <!-- add exercise button -->
+    <button
+      class="button-space"
+      matTooltip="Add exercise"
+      matTooltipPosition="right"
+      [matTooltipShowDelay]="500"
+      [matTooltipHideDelay]="100"
+      color="primary"
+      mat-fab
+      aria-label="Add Exercise"
+      (click)="addExercise()"
+    >
+      <mat-icon>add</mat-icon>
+    </button>
+    <!-- add new exercise name button -->
+    <button
+      class="button-space"
+      matTooltip="Add new exercise name"
+      matTooltipPosition="right"
+      [matTooltipShowDelay]="500"
+      [matTooltipHideDelay]="100"
+      color="primary"
+      mat-fab
+      aria-label="Add new exercise name"
+      (click)="addNewExerciseName()"
+    >
+      <mat-icon>playlist_add</mat-icon>
+    </button>
+  </div>
+
+  <form class="form">
+    <table
+      name="workout"
+      cellspacing="0"
+      *ngFor="let exercise of workout.exercises; let ind = index"
+    >
+      <tr>
+        <!-- exercise names -->
+        <td class="bg_light_gray">
+          <mat-form-field appearance="fill">
+            <mat-label>Exercise name</mat-label>
+            <mat-select [(value)]="workout.exercises[ind].name">
+              <mat-option *ngFor="let e of exercises" [value]="e.name">
+                {{ e.name }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </td>
+        <!-- number of repetitions -->
+        <td
+          class="bg_light_gray"
+          *ngFor="
+            let reps of exercise.repsInSets;
+            let i = index;
+            trackBy: indexTracker
+          "
+        >
+          <mat-form-field class="num-width" appearance="fill">
+            <mat-label>Set {{ i + 1 }}</mat-label>
+            <input
+              name="exercise.{{ ind }}.name.{{ i }} "
+              matInput
+              type="number"
+              [(ngModel)]="workout.exercises[ind].repsInSets[i]"
+              placeholder="0"
+            />
+          </mat-form-field>
+        </td>
+        <!-- delete buttons -->
+        <td>
+          <button
+            matTooltip="Delete this exercise"
+            matTooltipPosition="left"
+            [matTooltipShowDelay]="500"
+            [matTooltipHideDelay]="100"
+            class="delete-button-space"
+            color="warn"
+            mat-fab
+            aria-label="Delete Exercise"
+            (click)="deleteExercise(exercise)"
+          >
+            <mat-icon>delete</mat-icon>
+          </button>
+        </td>
+      </tr>
+    </table>
+  </form>
+
+  <div fxLayout="column" fxLayoutAlign="center"></div>
+</div>

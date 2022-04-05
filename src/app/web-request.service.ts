@@ -1,5 +1,6 @@
 import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
+import { environment } from "src/environments/environment";
 
 @Injectable({
   providedIn: "root",
@@ -8,7 +9,7 @@ export class WebRequestService {
   readonly ROOT_URL: string;
 
   constructor(private http: HttpClient) {
-    this.ROOT_URL = "http://localhost:3000";
+    this.ROOT_URL = environment.SERVER_URI;
   }
   login(email: string, password: string) {
     return this.http.post(
@@ -17,10 +18,10 @@ export class WebRequestService {
       { observe: "response" }
     );
   }
-  signup(email: string, password: string) {
+  signup(userName: string, email: string, password: string) {
     return this.http.post(
       `${this.ROOT_URL}/users`,
-      { email, password },
+      { userName, email, password },
       { observe: "response" }
     );
   }

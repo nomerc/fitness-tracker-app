@@ -1,6 +1,7 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
+import { environment } from "src/environments/environment";
 import { ExerciseName } from "src/models/exerciseName.model";
 import { Workout } from "src/models/workout.model";
 
@@ -11,7 +12,7 @@ export class DataService {
   readonly ROOT_URL: string;
 
   constructor(private http: HttpClient) {
-    this.ROOT_URL = "http://localhost:3000";
+    this.ROOT_URL = environment.SERVER_URI;
   }
 
   //------workout data operations------

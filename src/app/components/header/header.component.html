@@ -1,0 +1,18 @@
+<div fxLayout="row" fxLayoutAlign="end center" [ngStyle]="{ color: color }">
+  <div style="padding-top: 15px; padding-right: 15px">
+    <p>Logged in as {{ user }}</p>
+  </div>
+  <button
+    class="button-space"
+    matTooltip="Log out"
+    matTooltipPosition="right"
+    [matTooltipShowDelay]="500"
+    [matTooltipHideDelay]="100"
+    color="primary"
+    mat-fab
+    aria-label="Log out"
+    (click)="logout()"
+  >
+    <mat-icon>logout</mat-icon>
+  </button>
+</div>
