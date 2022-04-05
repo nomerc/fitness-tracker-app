@@ -23,7 +23,7 @@ export class LoginPageComponent implements OnInit {
     this.authService.login(email, password).subscribe((res) => {
       if (res.status === 200) {
         this.utils.openSnackBar(`Logged in`, "Close");
-        this.router.navigate(["/"]);
+        this.router.navigate(["/calendar"]);
       }
     });
   }

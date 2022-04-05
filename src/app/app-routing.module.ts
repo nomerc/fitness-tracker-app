@@ -9,6 +9,7 @@ import { StartingPageComponent } from "./pages/starting-page/starting-page.compo
 
 const routes: Routes = [
   { path: "", component: LoginPageComponent },
+  { path: "calendar", component: StartingPageComponent },
   { path: "login", component: LoginPageComponent },
   { path: "signup", component: SignupPageComponent },
   { path: "details", component: DetailsPageComponent },

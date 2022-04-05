@@ -24,7 +24,7 @@ export class SignupPageComponent implements OnInit {
     this.authService.signup(name, email, password).subscribe((res) => {
       if (res.status === 200) {
         this.utils.openSnackBar(`Logged in`, "Close");
-        this.router.navigate(["/"]);
+        this.router.navigate(["/calendar"]);
       }
     });
   }
