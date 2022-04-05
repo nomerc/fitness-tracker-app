@@ -8,7 +8,7 @@ import { SignupPageComponent } from "./pages/signup-page/signup-page.component";
 import { StartingPageComponent } from "./pages/starting-page/starting-page.component";
 
 const routes: Routes = [
-  { path: "", component: StartingPageComponent },
+  { path: "", component: LoginPageComponent },
   { path: "login", component: LoginPageComponent },
   { path: "signup", component: SignupPageComponent },
   { path: "details", component: DetailsPageComponent },

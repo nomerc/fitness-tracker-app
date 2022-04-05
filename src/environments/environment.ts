@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  SERVER_URI: "https://fitns-tracker.herokuapp.com",
+  SERVER_URI: "http://localhost:3000",
 };
 
 /*
