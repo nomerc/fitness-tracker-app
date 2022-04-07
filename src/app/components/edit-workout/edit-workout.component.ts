@@ -48,6 +48,6 @@ export class EditWorkoutComponent implements OnInit {
   }
 
   navigateToMainPaige() {
-    this.router.navigate(["/"]);
+    this.router.navigate(["/calendar"]);
   }
 }

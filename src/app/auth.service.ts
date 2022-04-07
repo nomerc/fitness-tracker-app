@@ -58,7 +58,7 @@ export class AuthService {
 
   logout() {
     this.removeSession();
-    this.router.navigate(["/login"]);
+    this.router.navigate(["/"]);
   }
 
   private removeSession() {
