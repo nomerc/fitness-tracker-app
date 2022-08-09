@@ -6,7 +6,7 @@ import {
   GoogleLoginProvider,
   SocialAuthService,
   SocialUser,
-} from "angularx-social-login";
+} from "@abacritt/angularx-social-login";
 import Utils from "src/utils/utils";
 
 @Component({
@@ -40,12 +40,11 @@ export class LoginPageComponent implements OnInit {
     });
   }
 
-  onLoginWithGoogleButtonClicked() {
-    this.socialAuthService
-      .signIn(GoogleLoginProvider.PROVIDER_ID)
-      .then((user: SocialUser) => {
-        this.onLoginButtonClicked(user.id, "default_pass");
-      });
+  onLoginWithGoogleButtonClicked(): void {
+    this.socialAuthService.signIn(GoogleLoginProvider.PROVIDER_ID);
+    // .then((user: SocialUser) => {
+    //   this.onLoginButtonClicked(user.id, "default_pass");
+    // });
   }
 
   showSpinner() {

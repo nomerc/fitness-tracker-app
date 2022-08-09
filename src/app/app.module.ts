@@ -10,7 +10,11 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from "@angular/common/http";
 import { WebRequestInterceptor } from "./web-req.interceptor";
 
 //login
-import { GoogleLoginProvider, SocialLoginModule } from "angularx-social-login";
+import {
+  GoogleLoginProvider,
+  SocialLoginModule,
+  SocialAuthServiceConfig,
+} from "@abacritt/angularx-social-login";
 
 //Layout
 import { FlexLayoutModule } from "@angular/flex-layout";
@@ -34,6 +38,7 @@ import { SignupPageComponent } from "./pages/signup-page/signup-page.component";
 import { EditWorkoutComponent } from "./components/edit-workout/edit-workout.component";
 import { EditWorkoutExercisesComponent } from "./components/edit-workout-exercises/edit-workout-exercises.component";
 import { HeaderComponent } from "./components/header/header.component";
+import { environment } from "src/environments/environment";
 
 @NgModule({
   declarations: [
@@ -70,10 +75,13 @@ import { HeaderComponent } from "./components/header/header.component";
         providers: [
           {
             id: GoogleLoginProvider.PROVIDER_ID,
-            provider: new GoogleLoginProvider(""),
+            provider: new GoogleLoginProvider(environment.GOOGLE_CLIENT_ID),
           },
         ],
-      },
+        onError: (err: any) => {
+          console.error(err);
+        },
+      } as SocialAuthServiceConfig,
     },
     {
       provide: HTTP_INTERCEPTORS,
