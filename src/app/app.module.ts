@@ -9,13 +9,8 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from "@angular/common/http";
 
 import { WebRequestInterceptor } from "./web-req.interceptor";
 
-//app pages and components
-import { CalendarComponent } from "./components/calendar/calendar.component";
-import { StartingPageComponent } from "./pages/starting-page/starting-page.component";
-import { ChartsPageComponent } from "./pages/charts-page/charts-page.component";
-import { DetailsPageComponent } from "./pages/details-page/details-page.component";
-import { CardComponent } from "./components/card/card.component";
-import { DashboardComponent } from "./components/dashboard/dashboard.component";
+//login
+import { GoogleLoginProvider, SocialLoginModule } from "angularx-social-login";
 
 //Layout
 import { FlexLayoutModule } from "@angular/flex-layout";
@@ -25,12 +20,20 @@ import { NgApexchartsModule } from "ng-apexcharts";
 
 //angular material
 import { MaterialModule } from "src/modules/material.module";
+
+//app pages and components
+import { CalendarComponent } from "./components/calendar/calendar.component";
+import { StartingPageComponent } from "./pages/starting-page/starting-page.component";
+import { ChartsPageComponent } from "./pages/charts-page/charts-page.component";
+import { DetailsPageComponent } from "./pages/details-page/details-page.component";
+import { CardComponent } from "./components/card/card.component";
+import { DashboardComponent } from "./components/dashboard/dashboard.component";
 import { AddExerciseNameModalComponent } from "./components/add-exercise-name-modal/add-exercise-name-modal.component";
 import { LoginPageComponent } from "./pages/login-page/login-page.component";
 import { SignupPageComponent } from "./pages/signup-page/signup-page.component";
 import { EditWorkoutComponent } from "./components/edit-workout/edit-workout.component";
-import { EditWorkoutExercisesComponent } from './components/edit-workout-exercises/edit-workout-exercises.component';
-import { HeaderComponent } from './components/header/header.component';
+import { EditWorkoutExercisesComponent } from "./components/edit-workout-exercises/edit-workout-exercises.component";
+import { HeaderComponent } from "./components/header/header.component";
 
 @NgModule({
   declarations: [
@@ -57,8 +60,21 @@ import { HeaderComponent } from './components/header/header.component';
     BrowserAnimationsModule,
     FlexLayoutModule,
     NgApexchartsModule,
+    SocialLoginModule,
   ],
   providers: [
+    {
+      provide: "SocialAuthServiceConfig",
+      useValue: {
+        autoLogin: true,
+        providers: [
+          {
+            id: GoogleLoginProvider.PROVIDER_ID,
+            provider: new GoogleLoginProvider(""),
+          },
+        ],
+      },
+    },
     {
       provide: HTTP_INTERCEPTORS,
       useClass: WebRequestInterceptor,

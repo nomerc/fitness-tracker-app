@@ -36,3 +36,22 @@ body {
 .login-full-width {
   width: 100%;
 }
+
+.login-btn {
+  margin-top: 15px;
+  margin-left: 15px;
+}
+.spinner {
+  display: inline;
+  margin-top: 15px;
+}
+
+.google-login-btn {
+  background-image: url("./assets/img/google-logo.png");
+  background-repeat: no-repeat;
+  background-size: 20%;
+  background-position: 10%;
+  padding-left: 10%;
+  margin-top: 15px;
+  margin-left: 15px;
+}
