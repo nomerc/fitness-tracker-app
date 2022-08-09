@@ -5,8 +5,6 @@
 export const environment = {
   production: false,
   SERVER_URI: "http://localhost:3000",
-  GOOGLE_CLIENT_ID:
-    "263809892504-gek2gm7tqtepetrjhg3ih3brptd3dj5d.apps.googleusercontent.com",
 };
 
 /*
