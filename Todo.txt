@@ -1,7 +1,4 @@
+Add loaders
 Add form validation
-Add server error handling(wrong login/pass message)
 Add route protection
 Provide default login pass for feature testing
-
-Possible errors are marked with !!! in comments
-//refreshAccessToken special attention

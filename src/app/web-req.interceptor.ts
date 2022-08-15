@@ -57,14 +57,11 @@ export class WebRequestInterceptor implements HttpInterceptor {
       });
     } else {
       this.refreshingAccessToken = true;
-      console.log("possible error");
-
       return this.authService.getNewAccessToken().pipe(
-        tap((token) => {
-          //!!!!
+        tap(() => {
           console.log("Access Token Refreshed");
           this.refreshingAccessToken = false;
-          this.accessTokenRefreshed.next(token); //!!!!
+          this.accessTokenRefreshed.next();
         })
       );
     }
