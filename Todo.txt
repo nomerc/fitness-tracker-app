@@ -1,6 +1,7 @@
 Add form validation
+Add server error handling(wrong login/pass message)
 Add route protection
 Provide default login pass for feature testing
 
-gitignore env
-upgrade angular version
+Possible errors are marked with !!! in comments
+//refreshAccessToken special attention

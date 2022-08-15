@@ -2,11 +2,6 @@ import { Component, OnInit } from "@angular/core";
 import { MatSnackBar } from "@angular/material/snack-bar";
 import { Router } from "@angular/router";
 import { AuthService } from "src/app/auth.service";
-import {
-  GoogleLoginProvider,
-  SocialAuthService,
-  SocialUser,
-} from "@abacritt/angularx-social-login";
 import Utils from "src/utils/utils";
 
 @Component({
@@ -17,7 +12,6 @@ import Utils from "src/utils/utils";
 export class LoginPageComponent implements OnInit {
   constructor(
     private authService: AuthService,
-    private socialAuthService: SocialAuthService,
     private _snackBar: MatSnackBar,
     private router: Router
   ) {}
@@ -41,7 +35,6 @@ export class LoginPageComponent implements OnInit {
   }
 
   onLoginWithGoogleButtonClicked(): void {
-    this.socialAuthService.signIn(GoogleLoginProvider.PROVIDER_ID);
     // .then((user: SocialUser) => {
     //   this.onLoginButtonClicked(user.id, "default_pass");
     // });
